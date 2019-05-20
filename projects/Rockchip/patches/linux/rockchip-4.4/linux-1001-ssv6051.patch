@@ -1,0 +1,23 @@
+--- a/drivers/net/wireless/rockchip_wlan/ssv6xxx/ssvdevice/ssvdevice.c	2018-08-03 10:42:08.000000000 +0200
++++ b/drivers/net/wireless/rockchip_wlan/ssv6xxx/ssvdevice/ssvdevice.c	2018-09-05 18:46:20.039880124 +0200
+@@ -58,7 +58,7 @@
+ char *ssv6xxx_result_buf;
+ extern struct ssv6xxx_cfg_cmd_table cfg_cmds[];
+ extern struct ssv6xxx_cfg ssv_cfg;
+-char DEFAULT_CFG_PATH[] = "/vendor/etc/firmware/ssv6051-wifi.cfg";
++char DEFAULT_CFG_PATH[] = "/etc/firmware/ssv6051/ssv6051-wifi.cfg";
+ static int ssv6xxx_dbg_open(struct inode *inode, struct file *filp)
+ {
+     filp->private_data = inode->i_private;
+
+--- a/drivers/net/wireless/rockchip_wlan/ssv6xxx/ssvdevice/ssv_cmd.c	2019-05-17 11:47:56.000000000 +0200
++++ b/drivers/net/wireless/rockchip_wlan/ssv6xxx/ssvdevice/ssv_cmd.c	2019-05-20 23:22:08.475498698 +0200
+@@ -1541,7 +1541,7 @@
+  size_per_frame = simple_strtoul(argv[2], &endp, 10);
+  loop_times = simple_strtoul(argv[3], &endp, 10);
+  sprintf(tmpbf, "type&size&frames:%d&%d&%d\n", pkt_type, size_per_frame, loop_times);
+- strncat(ssv6xxx_result_buf, tmpbf, sizeof(tmpbf));
++ strcat(ssv6xxx_result_buf, tmpbf);
+  if (ssv6xxx_txtput->txtput_tsk) {
+   sprintf(tmpbf, "txtput already in progress\n");
+   strcat(ssv6xxx_result_buf, tmpbf);
