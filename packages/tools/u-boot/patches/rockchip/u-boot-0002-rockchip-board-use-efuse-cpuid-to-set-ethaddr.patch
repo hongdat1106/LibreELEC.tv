@@ -87,3 +87,15 @@ index b56edebf13..155871f5bf 100644
  		/* generate random cpuid */
  		for (i = 0; i < CPUID_LEN; i++) {
 
+--- a/arch/arm/mach-rockchip/board.c
++++ b/arch/arm/mach-rockchip/board.c
+@@ -205,8 +205,8 @@
+ 
+ int board_late_init(void)
+ {
+-	rockchip_set_ethaddr();
+ 	rockchip_set_serialno();
++	rockchip_set_ethaddr();
+ #if (CONFIG_ROCKCHIP_BOOT_MODE_REG > 0)
+ 	setup_boot_mode();
+ #endif
