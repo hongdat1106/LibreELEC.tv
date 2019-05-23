@@ -1,3 +1,4 @@
+
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
@@ -19,8 +20,8 @@ PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 
 case "$PROJECT" in
   Rockchip)
-    PKG_VERSION="01714a2c060dbad1027faaf1a63028a79d2ed1fd"
-    PKG_SHA256="2670eb522b4b5daabf59f7fdbc8ee000509f66cfa631e99d4404cc81e51c6fd8"
+    PKG_VERSION="e311da245800596d57b7b7d91ebd4a730747a9ec"
+    PKG_SHA256="a5fd903cfe6255a20f7592ae678bdb3122a6ad83d6a8d47fa44a8cc2988393b5"
     PKG_URL="https://github.com/rockchip-linux/u-boot/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="rockchip"
     PKG_DEPENDS_TARGET+=" rkbin"
