@@ -26,29 +26,6 @@ index 69bf5cf1e91e..00672a818145 100644
 +
  #undef USB_DEVICE_VENDOR_SPEC
 
-From 61382c4e328df487f69b2095865c2e9e2c9e4121 Mon Sep 17 00:00:00 2001
-From: Jonas Karlman <jonas@kwiboo.se>
-Date: Sun, 28 May 2017 09:08:50 +0200
-Subject: [PATCH] gpu/arm/mali400: default to performance gpu governor
-
----
- drivers/gpu/arm/mali400/mali/linux/mali_devfreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/arm/mali400/mali/linux/mali_devfreq.c b/drivers/gpu/arm/mali400/mali/linux/mali_devfreq.c
-index c9b8652f100d..6c97c530a2ae 100644
---- a/drivers/gpu/arm/mali400/mali/linux/mali_devfreq.c
-+++ b/drivers/gpu/arm/mali400/mali/linux/mali_devfreq.c
-@@ -259,7 +259,7 @@ int mali_devfreq_init(struct mali_device *mdev)
- 		return -EFAULT;
- 
- 	mdev->devfreq = devfreq_add_device(mdev->dev, dp,
--					   "simple_ondemand", NULL);
-+					   "performance", NULL);
- 	if (IS_ERR(mdev->devfreq)) {
- 		mali_devfreq_term_freq_table(mdev);
- 		return PTR_ERR(mdev->devfreq);
-
 From 0fcd82216c0161c9dd6b54ee505988c539df91fb Mon Sep 17 00:00:00 2001
 From: LongChair <LongChair@hotmail.com>
 Date: Fri, 21 Apr 2017 13:39:12 +0200
@@ -708,7 +685,28 @@ index 7273561fe6b1..e2aad6e2149b 100644
  			*color_format = DRM_HDMI_OUTPUT_YCBCR422;
  	}
  
-
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -510,11 +510,18 @@
+ 		return MODE_BAD;
+ 
+ 	hdmi = to_rockchip_hdmi(encoder);
+-	if ((hdmi->dev_type == RK3368_HDMI || hdmi->dev_type == RK3328_HDMI) &&
++	if ((hdmi->dev_type == RK3368_HDMI || hdmi->dev_type == RK3328_HDMI ||
++	     hdmi->dev_type == RK3228_HDMI) &&
+ 	    mode->clock > 340000 &&
+ 	    !drm_mode_is_420(&connector->display_info, mode))
+ 		return MODE_BAD;
+ 
++	/* Skip (detectable) fractional rates for RK3228 */
++	if (hdmi->dev_type == RK3228_HDMI &&
++		(mode->clock == 59341 || mode->clock == 74176 || mode->clock == 148352 ||
++		 mode->clock == 296703 || mode->clock == 593407))
++			return MODE_BAD;
++
+ 	/* Skip bad clocks for RK3288 */
+ 	if (hdmi->dev_type == RK3288_HDMI && (mode->clock < 27500 || mode->clock > 340000))
+ 		return MODE_CLOCK_RANGE;
 From 9d6de32c2e992b71e6634a284dc99ab1b3bd43e2 Mon Sep 17 00:00:00 2001
 From: Jonas Karlman <jonas@kwiboo.se>
 Date: Sun, 22 Jul 2018 15:09:16 +0200
@@ -1394,4 +1392,14 @@ index 240cecac65b5..8fe4163214e0 100644
  
  	psp = POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT_MAX;
  	if (power_supply_get_property(psy, psp, &val) == 0)
-
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -646,7 +646,7 @@
+ 	{ .base = 0x00, .phy = &rk3288_win01_data,
+ 	  .type = DRM_PLANE_TYPE_PRIMARY },
+ 	{ .base = 0x40, .phy = &rk3288_win01_data,
+-	  .type = DRM_PLANE_TYPE_CURSOR },
++	  .type = DRM_PLANE_TYPE_OVERLAY },
+ };
+ 
+ static const struct vop_data rk322x_vop = {

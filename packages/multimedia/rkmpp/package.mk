@@ -11,7 +11,7 @@ PKG_URL="https://github.com/rockchip-linux/mpp/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libdrm"
 PKG_LONGDESC="rkmpp: Rockchip Media Process Platform (MPP) module"
 
-if [ "$DEVICE" = "RK3328" -o "$DEVICE" = "RK3399" ]; then
+if [ "$DEVICE" = "RK3328" -o "$DEVICE" = "RK3399" -o "$DEVICE" = "RK322x" ]; then
   PKG_ENABLE_VP9D="ON"
 else
   PKG_ENABLE_VP9D="OFF"

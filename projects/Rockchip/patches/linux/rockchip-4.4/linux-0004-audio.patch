@@ -1199,7 +1199,22 @@ index af1b7429b6d4..d0b4578ffa0e 100644
  			.formats = (SNDRV_PCM_FMTBIT_S16_LE |
  				    SNDRV_PCM_FMTBIT_S20_3LE |
  				    SNDRV_PCM_FMTBIT_S24_LE |
-
+--- a/sound/soc/codecs/rk3228_codec.c
++++ b/sound/soc/codecs/rk3228_codec.c
+@@ -352,7 +352,12 @@
+ 			.stream_name = "HIFI Playback",
+ 			.channels_min = 1,
+ 			.channels_max = 2,
+-			.rates = SNDRV_PCM_RATE_8000_96000,
++			.rates = (SNDRV_PCM_RATE_8000 |
++				  SNDRV_PCM_RATE_16000 |
++				  SNDRV_PCM_RATE_32000 |
++				  SNDRV_PCM_RATE_48000 |
++				  SNDRV_PCM_RATE_64000 |
++				  SNDRV_PCM_RATE_96000),
+ 			.formats = (SNDRV_PCM_FMTBIT_S16_LE |
+ 				    SNDRV_PCM_FMTBIT_S20_3LE |
+ 				    SNDRV_PCM_FMTBIT_S24_LE |
 From 878d789ff5faa02f0da5e68126e2276124611eeb Mon Sep 17 00:00:00 2001
 From: Jonas Karlman <jonas@kwiboo.se>
 Date: Sun, 8 Jul 2018 12:34:43 +0200
