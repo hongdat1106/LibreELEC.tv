@@ -1333,3 +1333,26 @@ index 0000000..f69cc67
 +&ir_receiver {
 +	status = "okay";
 +};
+diff --git a/arch/arm/boot/dts/rk322x.dtsi b/arch/arm/boot/dts/rk322x.dtsi
+index 1f1e4e6..9ae6209 100644
+--- a/arch/arm/boot/dts/rk322x.dtsi
++++ b/arch/arm/boot/dts/rk322x.dtsi
+@@ -594,6 +594,18 @@
+ 		status = "disabled";
+ 	};
+ 
++	crypto: cypto-controller@100a0000 {
++                compatible = "rockchip,rk3288-crypto";
++                reg = <0x100a0000 0x4000>;
++                interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>;
++                clocks = <&cru HCLK_M_CRYPTO>, <&cru HCLK_S_CRYPTO>,
++                         <&cru SCLK_CRYPTO>, <&cru ACLK_DMAC>;
++                clock-names = "aclk", "hclk", "sclk", "apb_pclk";
++                resets = <&cru SRST_CRYPTO>;
++                reset-names = "crypto-rst";
++                status = "okay";
++	};
++
+ 	pwm0: pwm@110b0000 {
+ 		compatible = "rockchip,rk3288-pwm";
+ 		reg = <0x110b0000 0x10>;
