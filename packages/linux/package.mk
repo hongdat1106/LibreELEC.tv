@@ -1,3 +1,4 @@
+
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
@@ -17,8 +18,8 @@ PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
   rockchip-4.4)
-    PKG_VERSION="5c40b14f4f2b13d1a75fe38dc05caefc5b3116f4"
-    PKG_SHA256="44de8ceb194908ba802b45696bf209afc966a2e9d33b942c4e438ee48f6b391f"
+    PKG_VERSION="2cd57789550b9867c8ce9711446863c64dd2b869"
+    PKG_SHA256="151443aba30b2c56db6cf861aeb39ca7b6e277c99e7fcedcfbe3e2f8f10fee51"
     PKG_URL="https://github.com/rockchip-linux/kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
