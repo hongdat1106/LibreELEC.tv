@@ -13,11 +13,11 @@ PKG_STAMP="$MALI_FAMILY"
 
 PKG_DEPENDS_TARGET="libdrm"
 
-if [ "$MALI_FAMILY" = "t620" -o "$MALI_FAMILY" = "t720" ]; then
+if listcontains "$MALI_FAMILY" "(t620|t720)"; then
   PKG_DEPENDS_TARGET+=" wayland"
 fi
 
-PKG_CMAKE_OPTS_TARGET="-DMALI_VARIANT=$MALI_FAMILY"
+PKG_CMAKE_OPTS_TARGET="-DMALI_VARIANT=${MALI_FAMILY// /;}"
 
 if [ "$TARGET_ARCH" = "aarch64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DMALI_ARCH=aarch64-linux-gnu"

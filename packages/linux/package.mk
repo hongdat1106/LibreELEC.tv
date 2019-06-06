@@ -7,7 +7,7 @@ PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
@@ -24,14 +24,14 @@ case "$LINUX" in
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   raspberrypi)
-    PKG_VERSION="b988f83d9cfc5ca11033b6509103b42dcda1bb7a" # 5.1
-    PKG_SHA256="c049323f7830fd525eff55a90d057416b8b6ff5bb82724ef9fcb10b9dc6cc90f"
+    PKG_VERSION="4b621fdda46932d6620f4c61a5491a11db44e542" # 5.1.5
+    PKG_SHA256="c8d192cebf692e989f7b9587a1b9af3111f1dbb5a870eb3f623efe1319337d92"
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="5.1"
-    PKG_SHA256="d06a7be6e73f97d1350677ad3bae0ce7daecb79c2c2902aaabe806f7fa94f041"
+    PKG_VERSION="5.1.5"
+    PKG_SHA256="d79f90f5ca97befbfee4e247204b2ac4f45e7bb03d63a79184bc748cf3cf6ddb"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -128,6 +128,11 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+  ( cd $ROOT
+    rm -rf $BUILD/initramfs
+    $SCRIPTS/install initramfs
+  )
+
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
@@ -148,10 +153,17 @@ pre_make_target() {
 }
 
 make_target() {
-  kernel_make modules
-  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
+  # arm64 target does not support creating uImage.
+  # Build Image first, then wrap it using u-boot's mkimage.
+  if [[ "$TARGET_KERNEL_ARCH" = "arm64" && "$KERNEL_TARGET" = uImage* ]]; then
+    if [ -z "$KERNEL_UIMAGE_LOADADDR" -o -z "$KERNEL_UIMAGE_ENTRYADDR" ]; then
+      die "ERROR: KERNEL_UIMAGE_LOADADDR and KERNEL_UIMAGE_ENTRYADDR have to be set to build uImage - aborting"
+    fi
+    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
+    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
+  fi
+
+  kernel_make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
@@ -186,26 +198,6 @@ make_target() {
     )
   fi
 
-  ( cd $ROOT
-    rm -rf $BUILD/initramfs
-    $SCRIPTS/install initramfs
-  )
-
-  # arm64 target does not support creating uImage.
-  # Build Image first, then wrap it using u-boot's mkimage.
-  if [[ "$TARGET_KERNEL_ARCH" = "arm64" && "$KERNEL_TARGET" = uImage* ]]; then
-    if [ -z "$KERNEL_UIMAGE_LOADADDR" -o -z "$KERNEL_UIMAGE_ENTRYADDR" ]; then
-      die "ERROR: KERNEL_UIMAGE_LOADADDR and KERNEL_UIMAGE_ENTRYADDR have to be set to build uImage - aborting"
-    fi
-    KERNEL_UIMAGE_TARGET="$KERNEL_TARGET"
-    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
-  fi
-
-  # the modules target is required to get a proper Module.symvers
-  # file with symbols from built-in and external modules.
-  # Without that it'll contain only the symbols from the kernel
-  kernel_make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
-
   if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
     # determine compression used for kernel image
     KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
@@ -237,6 +229,10 @@ make_target() {
 }
 
 makeinstall_target() {
+  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
+
   if [ "$BOOTLOADER" = "u-boot" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
     for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
@@ -257,31 +253,6 @@ makeinstall_target() {
       cp $dtb $INSTALL/usr/share/bootloader/overlays 2>/dev/null || :
     done
     cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/README $INSTALL/usr/share/bootloader/overlays
-  fi
-}
-
-make_init() {
- : # reuse make_target()
-}
-
-makeinstall_init() {
-  if [ -n "$INITRAMFS_MODULES" ]; then
-    mkdir -p $INSTALL/etc
-    mkdir -p $INSTALL/usr/lib/modules
-
-    for i in $INITRAMFS_MODULES; do
-      module=`find .install_pkg/$(get_full_module_dir)/kernel -name $i.ko`
-      if [ -n "$module" ]; then
-        echo $i >> $INSTALL/etc/modules
-        cp $module $INSTALL/usr/lib/modules/`basename $module`
-      fi
-    done
-  fi
-
-  if [ "$UVESAFB_SUPPORT" = yes ]; then
-    mkdir -p $INSTALL/usr/lib/modules
-      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
-      cp $uvesafb $INSTALL/usr/lib/modules/`basename $uvesafb`
   fi
 }
 
