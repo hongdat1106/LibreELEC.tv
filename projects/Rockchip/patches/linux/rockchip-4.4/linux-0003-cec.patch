@@ -31,7 +31,7 @@ Skipped changes:
  drivers/media/rc/rc-main.c                         |   1 +
  fs/compat_ioctl.c                                  |  12 +
  include/media/cec-notifier.h                       |  22 ++
- include/media/cec.h                                |  32 +-
+ include/media/cec.h                                |   9 +-
  include/media/rc-map.h                             |   5 +-
  include/uapi/linux/cec-funcs.h                     |   1 +
  include/uapi/linux/cec.h                           |   2 +-
@@ -2842,17 +2842,7 @@ diff --git a/include/media/cec.h b/include/media/cec.h
 index df3c94f05aa5..f64807a78064 100644
 --- a/include/media/cec.h
 +++ b/include/media/cec.h
-@@ -31,6 +31,9 @@
- #include <media/rc-core.h>
- #include <media/cec-notifier.h>
- 
-+#define CEC_CAP_DEFAULTS (CEC_CAP_LOG_ADDRS | CEC_CAP_TRANSMIT | \
-+			  CEC_CAP_PASSTHROUGH | CEC_CAP_RC)
-+
- /**
-  * struct cec_devnode - cec device node
-  * @dev:	cec device
-@@ -188,6 +191,11 @@ struct cec_adapter {
+@@ -191,6 +191,11 @@ struct cec_adapter {
  
  	u32 tx_timeouts;
  
@@ -2864,7 +2854,7 @@ index df3c94f05aa5..f64807a78064 100644
  #ifdef CONFIG_CEC_NOTIFIER
  	struct cec_notifier *notifier;
  #endif
-@@ -226,7 +234,7 @@ static inline bool cec_is_sink(const struct cec_adapter *adap)
+@@ -229,7 +234,7 @@ static inline bool cec_is_sink(const struct cec_adapter *adap)
  
  struct edid;
  
@@ -2873,19 +2863,7 @@ index df3c94f05aa5..f64807a78064 100644
  struct cec_adapter *cec_allocate_adapter(const struct cec_adap_ops *ops,
  		void *priv, const char *name, u32 caps, u8 available_las);
  int cec_register_adapter(struct cec_adapter *adap, struct device *parent);
-@@ -373,11 +381,6 @@ u16 cec_phys_addr_for_input(u16 phys_addr, u8 input);
-  */
- int cec_phys_addr_validate(u16 phys_addr, u16 *parent, u16 *port);
- 
--#ifdef CONFIG_CEC_NOTIFIER
--void cec_register_cec_notifier(struct cec_adapter *adap,
--			       struct cec_notifier *notifier);
--#endif
--
- #else
- 
- static inline int cec_register_adapter(struct cec_adapter *adap,
-@@ -424,9 +427,26 @@ static inline u16 cec_phys_addr_for_input(u16 phys_addr, u8 input)
+@@ -427,6 +427,10 @@ static inline u16 cec_phys_addr_for_input(u16 phys_addr, u8 input)
  
  static inline int cec_phys_addr_validate(u16 phys_addr, u16 *parent, u16 *port)
  {
@@ -2896,22 +2874,6 @@ index df3c94f05aa5..f64807a78064 100644
  	return 0;
  }
  
- #endif
- 
-+/**
-+ * cec_phys_addr_invalidate() - set the physical address to INVALID
-+ *
-+ * @adap:	the CEC adapter
-+ *
-+ * This is a simple helper function to invalidate the physical
-+ * address.
-+ */
-+static inline void cec_phys_addr_invalidate(struct cec_adapter *adap)
-+{
-+	cec_s_phys_addr(adap, CEC_PHYS_ADDR_INVALID, false);
-+}
-+
- #endif /* _MEDIA_CEC_H */
 diff --git a/include/uapi/linux/cec-funcs.h b/include/uapi/linux/cec-funcs.h
 index c451eec42a83..270b251a3d9b 100644
 --- a/include/uapi/linux/cec-funcs.h

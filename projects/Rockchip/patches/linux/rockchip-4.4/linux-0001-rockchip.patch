@@ -1200,3 +1200,16 @@ index 240cecac65b5..8fe4163214e0 100644
  };
  
  static const struct vop_data rk322x_vop = {
+diff --git a/drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd/dhd_linux.c b/drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd/dhd_linux.c
+index f3ad402..d8112c9 100644
+--- a/drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd/dhd_linux.c
++++ b/drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd/dhd_linux.c
+@@ -6962,7 +6962,7 @@ dhd_ethtool(dhd_info_t *dhd, void *uaddr)
+ 		/* Copy out any request driver name */
+ 		if (copy_from_user(&info, uaddr, sizeof(info)))
+ 			return -EFAULT;
+-		strncpy(drvname, info.driver, sizeof(info.driver));
++		strncpy(drvname, info.driver, sizeof(drvname));
+ 		drvname[sizeof(info.driver)-1] = '\0';
+ 
+ 		/* clear struct for return */
