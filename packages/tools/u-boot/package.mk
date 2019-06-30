@@ -19,6 +19,12 @@ PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 [ -n "$DEVICE" ] && PKG_NEED_UNPACK+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader"
 
 case "$PROJECT" in
+  Amlogic)
+    PKG_DEPENDS_TARGET+=" amlogic-boot-fip"
+    ;;
+esac
+
+case "$PROJECT" in
   Rockchip)
     PKG_VERSION="e311da245800596d57b7b7d91ebd4a730747a9ec"
     PKG_SHA256="a5fd903cfe6255a20f7592ae678bdb3122a6ad83d6a8d47fa44a8cc2988393b5"

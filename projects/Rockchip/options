@@ -57,9 +57,6 @@
   # additional packages to install
     ADDITIONAL_PACKAGES="dtc"
 
-  # build and install ATV IR remote support (yes / no)
-    ATVCLIENT_SUPPORT="no"
-
   # build and install CEC framework support (yes / no)
     CEC_FRAMEWORK_SUPPORT="yes"
 
@@ -75,7 +72,7 @@
   # driver addons to install:
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
-    DRIVER_ADDONS="crazycat dvb-latest"
+    DRIVER_ADDONS="dvb-latest"
 
   # debug tty path
     DEBUG_TTY="/dev/ttyS2"
