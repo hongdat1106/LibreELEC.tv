@@ -1251,14 +1251,6 @@ index 1d4570e3fbed..d0904f6b7a82 100644
  	dw_hdmi_audio_enable(hdmi);
  
  	return 0;
-@@ -211,6 +205,7 @@ static void dw_hdmi_i2s_audio_shutdown(struct device *dev, void *data)
- 	dw_hdmi_audio_disable(hdmi);
- 
- 	hdmi_write(audio, HDMI_AUD_CONF0_SW_RESET, HDMI_AUD_CONF0);
-+	hdmi_write(audio, (u8)~HDMI_MC_SWRSTZ_I2S_RESET_MSK, HDMI_MC_SWRSTZ);
- }
- 
- static int dw_hdmi_i2s_get_eld(struct device *dev, void *data, u8 *buf, size_t len)
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 index df1ea752ac3d..4bf4ff0fd741 100644
 --- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
@@ -1388,3 +1380,4 @@ index 4bf4ff0fd741..2583320f3289 100644
  
  	spin_lock_irq(&hdmi->audio_lock);
  	hdmi->audio_n = n;
+

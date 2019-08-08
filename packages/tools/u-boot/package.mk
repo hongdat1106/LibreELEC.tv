@@ -13,16 +13,13 @@ PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="$UBOOT_SYSTEM"
 
-[ -n "$ATF_PLATFORM" ] && PKG_DEPENDS_TARGET+=" atf"
+if [ -n "$UBOOT_FIRMWARE" ]; then
+  PKG_DEPENDS_TARGET+=" $UBOOT_FIRMWARE"
+  PKG_DEPENDS_UNPACK+=" $UBOOT_FIRMWARE"
+fi
 
 PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 [ -n "$DEVICE" ] && PKG_NEED_UNPACK+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader"
-
-case "$PROJECT" in
-  Amlogic)
-    PKG_DEPENDS_TARGET+=" amlogic-boot-fip"
-    ;;
-esac
 
 case "$PROJECT" in
   Rockchip)
@@ -30,8 +27,6 @@ case "$PROJECT" in
     PKG_SHA256="a5fd903cfe6255a20f7592ae678bdb3122a6ad83d6a8d47fa44a8cc2988393b5"
     PKG_URL="https://github.com/rockchip-linux/u-boot/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="rockchip"
-    PKG_DEPENDS_TARGET+=" rkbin"
-    PKG_NEED_UNPACK+=" $(get_pkg_directory rkbin)"
     ;;
   *)
     PKG_VERSION="2019.04"
@@ -55,7 +50,7 @@ make_target() {
     echo "see './scripts/uboot_helper' for more information"
   else
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
-    [ -n "$ATF_PLATFORM" ] &&  cp -av $(get_build_dir atf)/bl31.bin .
+    [ -n "$UBOOT_FIRMWARE" ] && find_file_path bootloader/firmware && . ${FOUND_PATH}
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make mrproper
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make $($ROOT/$SCRIPTS/uboot_helper $PROJECT $DEVICE $UBOOT_SYSTEM config)
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm _python_sysroot="$TOOLCHAIN" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L$TOOLCHAIN/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
