@@ -614,8 +614,8 @@ index 4b2eef609601..ff90c5379671 100644
  	compatible = "pine64,rock64", "rockchip,rk3328";
  
  	chosen {
--		bootargs = "rockchip_jtag earlyprintk=uart8250-32bit,0xff130000 swiotlb=1 kpti=0 coherent_pool=1m";
-+		bootargs = "earlyprintk=uart8250-32bit,0xff130000 swiotlb=1 kpti=0 coherent_pool=1m";
+-		bootargs = "rockchip_jtag earlycon=uart8250-32bit,0xff130000 swiotlb=1 kpti=0 coherent_pool=1m";
++		bootargs = "earlycon=uart8250-32bit,0xff130000 swiotlb=1 kpti=0 coherent_pool=1m";
  		stdout-path = "serial2:1500000n8";
  	};
  
@@ -6316,7 +6316,7 @@ index 02b8ba7dcc94..aa1aee547036 100644
  	compatible = "pine64,rockpro64", "rockchip,rk3399";
  
 -	chosen {
--		bootargs = "earlyprintk=uart8250,mmio32,0xff1a0000 swiotlb=1 coherent_pool=1m";
+-		bootargs = "earlycon=uart8250,mmio32,0xff1a0000 swiotlb=1 coherent_pool=1m";
 -		stdout-path = "serial2:1500000n8";
 -	};
 -

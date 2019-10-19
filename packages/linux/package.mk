@@ -25,8 +25,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="amlogic"
     ;;
   rockchip-4.4)
-    PKG_VERSION="930e2835d3da86cad479e6c9177c1ee480b45a8a"
-    PKG_SHA256="a97a9e30a4c26dcd8043c5e1c8ed05e0c73d7f571911ded46423420b56910544"
+    PKG_VERSION="d49ba414db755169785cf2d54eeb150dab9261f3"
+    PKG_SHA256="9e2f64b2a9c75974511fe0d79b22f587f77b267bf1bf42c3ccb9d8bd13e1be6c"
     PKG_URL="https://github.com/rockchip-linux/kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     PKG_BUILD_PERF="no"
