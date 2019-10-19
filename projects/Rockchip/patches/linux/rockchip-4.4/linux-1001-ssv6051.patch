@@ -159,3 +159,16 @@
          crypto_data->priv = NULL;
          crypto_data->ops = NULL;
 
+diff --git a/drivers/net/wireless/rockchip_wlan/ssv6xxx/Makefile b/drivers/net/wireless/rockchip_wlan/ssv6xxx/Makefile
+index f86faef..e1df615 100644
+--- a/drivers/net/wireless/rockchip_wlan/ssv6xxx/Makefile
++++ b/drivers/net/wireless/rockchip_wlan/ssv6xxx/Makefile
+@@ -19,7 +19,7 @@ include $(KBUILD_TOP)/ssv6051.cfg
+ include $(KBUILD_TOP)/platform-config.mak
+ 
+ 
+-EXTRA_CFLAGS := -I$(KBUILD_TOP) -I$(KBUILD_TOP)/include
++EXTRA_CFLAGS := -I$(KBUILD_TOP) -I$(KBUILD_TOP)/include -Wno-error=missing-attributes
+ DEF_PARSER_H = $(KBUILD_TOP)/include/ssv_conf_parser.h
+ $(shell env ccflags="$(ccflags-y)" $(KBUILD_TOP)/parser-conf.sh $(DEF_PARSER_H))
+ 
