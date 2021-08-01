@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="RTL88X2BU"
-PKG_VERSION="439c7dbd9e43acd91d5704a50b68647716c52505"
+PKG_VERSION="5.8.7.4"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/cilynx/rtl88x2bu"
-PKG_URL="https://github.com/cilynx/rtl88x2bu/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain linux"
+PKG_SITE="https://github.com/morrownr/88x2bu"
+PKG_URL="https://github.com/morrownr/88x2bu/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain linux gcc:host"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_LONGDESC="Realtek RTL88x2BU Linux driver"
 PKG_IS_KERNEL_PKG="yes"
