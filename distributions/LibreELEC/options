@@ -17,8 +17,9 @@
   GREETING0="##############################################"
   GREETING1="#                 LibreELEC                  #"
   GREETING2="#            https://libreelec.tv            #"
-  GREETING3="##############################################"
-  GREETING4=""
+  GREETING3="#	         Custom build by C.Jin		  #"
+  GREETING4="##############################################"
+  GREETING5=""
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="libreelec"
@@ -68,7 +69,8 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU RTL88X2BU"
+#Default is:  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
+  ADDITIONAL_DRIVERS="RTL8822BU"
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
@@ -144,13 +146,15 @@
   REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="yes"
+#default =yes  
+JOYSTICK_SUPPORT="no"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="yes"
 
 # build and install CEC framework support (yes / no)
-  CEC_FRAMEWORK_SUPPORT="no"
+#default =no
+  CEC_FRAMEWORK_SUPPORT="yes"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="yes"
@@ -163,7 +167,8 @@
   SWAP_SUPPORT="yes"
 
 # swap support enabled per default (yes / no)
-  SWAP_ENABLED_DEFAULT="no"
+# Default="no"
+  SWAP_ENABLED_DEFAULT="yes"
 
 # swapfile size if SWAP_SUPPORT=yes in MB
   SWAPFILESIZE="128"
@@ -174,6 +179,7 @@
   ADDITIONAL_PACKAGES=""
 
 # build with installer (yes / no)
+#default="no"
   INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
@@ -186,7 +192,8 @@
   NANO_EDITOR="yes"
 
 # cron support (yes / no)
-  CRON_SUPPORT="yes"
+#default="yes"
+  CRON_SUPPORT="no"
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
