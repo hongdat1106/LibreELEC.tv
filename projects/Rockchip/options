@@ -95,4 +95,4 @@
     DEBUG_TTY="/dev/ttyS2"
 
   # drivers
-    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS openvfd-driver RTL8822BU"
+    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS openvfd-driver"
