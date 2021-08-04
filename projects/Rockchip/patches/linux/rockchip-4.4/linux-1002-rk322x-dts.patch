@@ -487,7 +487,6 @@ index 000000000000..ad45da14d0f4
 +		led_power {
 +                        gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_LOW>;
 +                        default-state = "on";
-+						 linux,default-trigger = "rc-feedback";
 +                };
 +
 +        };
