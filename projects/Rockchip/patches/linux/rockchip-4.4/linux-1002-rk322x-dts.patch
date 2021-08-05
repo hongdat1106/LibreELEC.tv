@@ -480,12 +480,12 @@ index 000000000000..ad45da14d0f4
 +                compatible = "gpio-leds";
 +
 +                led_standby {
-+                        gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;
++                        gpios = <&gpio1 RK_PC5 GPIO_ACTIVE_LOW>;
 +                        default-state = "off";
 +                };
 +
 +		led_power {
-+                        gpios = <&gpio3 RK_PC5 GPIO_ACTIVE_LOW>;
++                        gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_LOW>;
 +                        default-state = "on";
 +                };
 +
