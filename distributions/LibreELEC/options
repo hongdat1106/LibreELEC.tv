@@ -73,7 +73,8 @@
   ADDITIONAL_DRIVERS="RTL8822BU"
 
 # build and install bluetooth support (yes / no)
-  BLUETOOTH_SUPPORT="yes"
+#Default="yes"  
+  BLUETOOTH_SUPPORT="no"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
@@ -88,7 +89,8 @@
   KODI_MYSQL_SUPPORT="mariadb"
 
 # build xbmc with optical drive support (yes / no)
-  KODI_OPTICAL_SUPPORT="yes"
+ #Default="yes" 
+  KODI_OPTICAL_SUPPORT="no"
 
 # build with AirPlay support (stream videos from iDevices to KODI) (yes / no)
   KODI_AIRPLAY_SUPPORT="yes"
@@ -146,8 +148,7 @@
   REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-#default =yes  
-JOYSTICK_SUPPORT="yes"
+  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="yes"
@@ -184,8 +185,7 @@ JOYSTICK_SUPPORT="yes"
   INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
-# Default="no"
-  TESTING="yes"
+  TESTING="no"
 
 # OEM packages for OEM's (yes / no)
   OEM_SUPPORT="no"
