@@ -181,8 +181,7 @@
   ADDITIONAL_PACKAGES="pvr.iptvsimple"
 
 # build with installer (yes / no)
-#default="no"
-  INSTALLER_SUPPORT="yes"
+  INSTALLER_SUPPORT="no"
 
 # Testpackages for development (yes / no)
   TESTING="no"
