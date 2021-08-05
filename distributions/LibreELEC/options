@@ -22,7 +22,7 @@
   GREETING5=""
 
 # Root password to integrate in the target system
-  ROOT_PASSWORD="libreelec"
+  ROOT_PASSWORD="haha123123"
 
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
@@ -69,12 +69,11 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-#Default:  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
+#Default is:  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
   ADDITIONAL_DRIVERS="RTL8822BU"
 
 # build and install bluetooth support (yes / no)
-#Default="yes"  
-  BLUETOOTH_SUPPORT="no"
+  BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
@@ -89,8 +88,7 @@
   KODI_MYSQL_SUPPORT="mariadb"
 
 # build xbmc with optical drive support (yes / no)
- #Default="yes" 
-  KODI_OPTICAL_SUPPORT="no"
+  KODI_OPTICAL_SUPPORT="yes"
 
 # build with AirPlay support (stream videos from iDevices to KODI) (yes / no)
   KODI_AIRPLAY_SUPPORT="yes"
@@ -148,7 +146,8 @@
   REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="yes"
+#default =yes  
+JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="yes"
@@ -181,10 +180,12 @@
   ADDITIONAL_PACKAGES="pvr.iptvsimple"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+#default="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
-  TESTING="no"
+# Default="no"
+  TESTING="yes"
 
 # OEM packages for OEM's (yes / no)
   OEM_SUPPORT="no"
