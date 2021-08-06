@@ -17,9 +17,8 @@
   GREETING0="##############################################"
   GREETING1="#                 LibreELEC                  #"
   GREETING2="#            https://libreelec.tv            #"
-  GREETING3="#	         Custom build by C.Jin		  #"
-  GREETING4="##############################################"
-  GREETING5=""
+  GREETING3="##############################################"
+  GREETING4=""
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="libreelec"
@@ -69,11 +68,10 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-#Default is:  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
-  ADDITIONAL_DRIVERS="RTL8822BU"
+  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
 
 # build and install bluetooth support (yes / no)
-  BLUETOOTH_SUPPORT="no"
+  BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
@@ -88,7 +86,7 @@
   KODI_MYSQL_SUPPORT="mariadb"
 
 # build xbmc with optical drive support (yes / no)
-  KODI_OPTICAL_SUPPORT="no"
+  KODI_OPTICAL_SUPPORT="yes"
 
 # build with AirPlay support (stream videos from iDevices to KODI) (yes / no)
   KODI_AIRPLAY_SUPPORT="yes"
@@ -146,15 +144,13 @@
   REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-#default =yes  
-JOYSTICK_SUPPORT="yes"
+  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="yes"
 
 # build and install CEC framework support (yes / no)
-#default =no
-  CEC_FRAMEWORK_SUPPORT="yes"
+  CEC_FRAMEWORK_SUPPORT="no"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="yes"
@@ -170,16 +166,15 @@ JOYSTICK_SUPPORT="yes"
   SWAP_ENABLED_DEFAULT="no"
 
 # swapfile size if SWAP_SUPPORT=yes in MB
-# Default="128"
   SWAPFILESIZE="128"
 
 # additional packages to install:
 # Space separated list is supported,
 # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-  ADDITIONAL_PACKAGES="pvr.iptvsimple"
+  ADDITIONAL_PACKAGES=""
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"

@@ -67,7 +67,6 @@
     CEC_FRAMEWORK_SUPPORT="yes"
 
   # build with installer (yes / no)
-  # default="no"
     INSTALLER_SUPPORT="no"
 
   # Start boot partition at 16MiB, same as https://github.com/rockchip-linux/build images
