@@ -68,7 +68,7 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU RTL8822BU"
+  ADDITIONAL_DRIVERS="RTL8822BU"
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
@@ -171,7 +171,7 @@
 # additional packages to install:
 # Space separated list is supported,
 # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-  ADDITIONAL_PACKAGES=""
+  ADDITIONAL_PACKAGES="pvr.iptvsimple"
 
 # build with installer (yes / no)
   INSTALLER_SUPPORT="yes"
@@ -196,7 +196,8 @@
   ADDON_SERVER_URL="https://addons.libreelec.tv"
 
 # set the addon dirs
-  ADDON_PATH="$ADDON_VERSION/3328/$TARGET_ARCH"
+#Default=ADDON_PATH="$ADDON_VERSION/3328/$TARGET_ARCH"
+  ADDON_PATH="$ADDON_VERSION/3228/$TARGET_ARCH"
   ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
 
 # Default size of system partition, in MB, eg. 512
