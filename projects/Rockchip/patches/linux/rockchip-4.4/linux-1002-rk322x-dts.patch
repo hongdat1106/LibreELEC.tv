@@ -487,7 +487,6 @@ index 000000000000..ad45da14d0f4
 +				 led_red {
 +                        gpios = <&gpio3 RK_PC5 GPIO_ACTIVE_LOW>;
 +                        default-state = "off";
-+						 linux,default-trigger = "rc-feedback";
 +                };
 +
 +        };
