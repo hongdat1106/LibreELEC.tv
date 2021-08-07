@@ -58,7 +58,8 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware rockchip-firmware"
+  # FIRMWARE="misc-firmware wlan-firmware dvb-firmware rockchip-firmware"
+	FIRMWARE="misc-firmware rockchip-firmware"
 
   # additional packages to install
     ADDITIONAL_PACKAGES="dtc"
@@ -73,12 +74,14 @@
     SYSTEM_PART_START=32768
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="yes"
+  # Default="yes"
+    DRIVER_ADDONS_SUPPORT="no"
 
   # driver addons to install:
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
-    DRIVER_ADDONS="dvb-latest"
+  # DRIVER_ADDONS="dvb-latest"
+	DRIVER_ADDONS=""
 
   # debug tty path
     DEBUG_TTY="/dev/ttyS2"

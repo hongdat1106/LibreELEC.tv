@@ -494,7 +494,7 @@ index 000000000000..ad45da14d0f4
 +};
 +
 +&bluetooth {
-+	status = "okay";
++	status = "disabled";
 +};
 +
 +&dram_timing {
@@ -545,7 +545,7 @@ index 000000000000..ad45da14d0f4
 +};
 +
 +&wifi {
-+	status = "okay";
++	status = "disabled";
 +};
 diff --git a/arch/arm/boot/dts/rk3228b-box-v88mars-II.dts b/arch/arm/boot/dts/rk3228b-box-v88mars-II.dts
 new file mode 100644
