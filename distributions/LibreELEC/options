@@ -71,7 +71,7 @@
   ADDITIONAL_DRIVERS="RTL8822BU"
 
 # build and install bluetooth support (yes / no)
-  BLUETOOTH_SUPPORT="yes"
+  BLUETOOTH_SUPPORT="no"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
@@ -171,7 +171,7 @@
 # additional packages to install:
 # Space separated list is supported,
 # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"
-  ADDITIONAL_PACKAGES="pvr.iptvsimple"
+  ADDITIONAL_PACKAGES=""
 
 # build with installer (yes / no)
   INSTALLER_SUPPORT="yes"
