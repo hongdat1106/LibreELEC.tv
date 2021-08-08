@@ -7,13 +7,19 @@ PKG_NAME="chrome-libxkbcommon"
 PKG_LONGDESC="libxkbcommon for chrome"
 PKG_URL=""
 PKG_DEPENDS_UNPACK+=" libxkbcommon"
-PKG_BUILD_FLAGS="-sysroot"
+# linking failed with meson
+PKG_TOOLCHAIN="autotools"
 
-PKG_MESON_OPTS_TARGET="${PKG_MESON_OPTS_TARGET} \
-                           -Denable-static=false \
-                           -Denable-shared=true"
+PKG_CONFIGURE_OPTS_TARGET="--enable-docs \
+                           --disable-wayland \
+                           --disable-static \
+                           --enable-shared"
 
 unpack() {
-  mkdir -p ${PKG_BUILD}
-  tar --strip-components=1 -xf ${SOURCES}/${PKG_NAME:7}/${PKG_NAME:7}-${PKG_VERSION}.tar.xz -C ${PKG_BUILD}
+  mkdir -p $PKG_BUILD
+  tar --strip-components=1 -xf $SOURCES/${PKG_NAME:7}/${PKG_NAME:7}-$PKG_VERSION.tar.xz -C $PKG_BUILD
+}
+
+makeinstall_target() {
+  :
 }

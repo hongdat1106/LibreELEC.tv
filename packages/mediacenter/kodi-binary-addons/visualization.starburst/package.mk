@@ -2,13 +2,13 @@
 # Copyright (C) 2020-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="visualization.starburst"
-PKG_VERSION="19.0.0-Matrix"
-PKG_SHA256="b610919fd181dac638cbcea3f88b01a0b3522941415fde8fab51a17a88f536e2"
+PKG_VERSION="2.0.3-Leia"
+PKG_SHA256="5a06385dd4824373a00fe4e2139b3d851c51ed001f68671acf99d17ce348f5e2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/visualization.starburst"
-PKG_URL="https://github.com/xbmc/visualization.starburst/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/xbmc/visualization.starburst/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform glm"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.starburst"

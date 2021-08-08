@@ -3,13 +3,13 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pvr.mediaportal.tvserver"
-PKG_VERSION="8.2.1-Matrix"
-PKG_SHA256="2051aea6d4c94c963699f4e7bd84e0083d8355dc465df0673f6b67d1f4d6198b"
-PKG_REV="1"
+PKG_VERSION="3.5.18-Leia"
+PKG_SHA256="9c05578566f7448dc3a7677587c804596aa314afd493cb9c62cc65ea883645aa"
+PKG_REV="4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-pvr/pvr.mediaportal.tvserver"
-PKG_URL="https://github.com/kodi-pvr/pvr.mediaportal.tvserver/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/kodi-pvr/pvr.mediaportal.tvserver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.mediaportal.tvserver"
@@ -19,5 +19,5 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
 
 pre_configure_target() {
-  CXXFLAGS+=" -Wno-narrowing -DXLOCALE_NOT_USED"
+  CXXFLAGS="$CXXFLAGS -Wno-narrowing -DXLOCALE_NOT_USED"
 }

@@ -9,7 +9,9 @@ import xbmcaddon
 import subprocess
 import json
 
-import xbmc
+sys.path.append('/usr/share/kodi/addons/service.libreelec.settings')
+
+import oe
 
 __addon__ = xbmcaddon.Addon();
 __path__  = os.path.join(__addon__.getAddonInfo('path'), 'bin') + '/'
@@ -46,8 +48,8 @@ def startchrome(args):
     chrome_params = args + ' ' + \
                     __addon__.getSetting('HOMEPAGE')
     subprocess.call(__path__ + 'chrome-start ' + chrome_params, shell=True, env=new_env)
-  except Exception as e:
-    xbmc.log('## Chrome Error:' + repr(e), xbmc.LOGERROR)
+  except Exception, e:
+    oe.dbg_log('chrome', unicode(e))
 
 def isRuning(pname):
   tmp = os.popen("ps -Af").read()
@@ -99,4 +101,3 @@ else:
       time.sleep(1)
     resumeXbmc()
 
-del __addon__
