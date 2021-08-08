@@ -479,14 +479,14 @@ index 000000000000..ad45da14d0f4
 +	leds {
 +                compatible = "gpio-leds";
 +
-+                led_blue {
-+                        gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;
-+                        default-state = "on";
-+                };
-+
-+				 led_red {
++                led_standby {
 +                        gpios = <&gpio3 RK_PC5 GPIO_ACTIVE_LOW>;
 +                        default-state = "off";
++                };
++
++				 led_power {
++                        gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;
++                        default-state = "on";
 +                };
 +
 +        };
@@ -494,7 +494,7 @@ index 000000000000..ad45da14d0f4
 +};
 +
 +&bluetooth {
-+	status = "disabled";
++	status = "okay";
 +};
 +
 +&dram_timing {
@@ -545,7 +545,7 @@ index 000000000000..ad45da14d0f4
 +};
 +
 +&wifi {
-+	status = "disabled";
++	status = "okay";
 +};
 diff --git a/arch/arm/boot/dts/rk3228b-box-v88mars-II.dts b/arch/arm/boot/dts/rk3228b-box-v88mars-II.dts
 new file mode 100644
