@@ -3,34 +3,33 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="LibreELEC-settings"
-PKG_VERSION="e3b6d2b92bd4972db9c6866c01d7464dbadbe36c"
-PKG_SHA256="38ac942ccd8d6ba0456358cb67f9b93433a27f20a3c2a02c94604004d72bbe21"
+PKG_VERSION="67f0b7ffbdee07283c751190bf6bda979ac28b9f"
+PKG_SHA256="c0313131cd794d27fceb297270c0cd23e91e64308f968aa69e5736f97e83686f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"
-PKG_URL="https://github.com/LibreELEC/service.libreelec.settings/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python3 connman dbussy"
+PKG_URL="https://github.com/LibreELEC/service.libreelec.settings/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python2 connman pygobject dbus-python"
 PKG_LONGDESC="LibreELEC-settings: is a settings dialog for LibreELEC"
 
-PKG_MAKE_OPTS_TARGET="ADDON_VERSION=${OS_VERSION} \
-                      DISTRONAME=${DISTRONAME} \
-                      ROOT_PASSWORD=${ROOT_PASSWORD}"
+PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
 
-if [ "${DISPLAYSERVER}" = "x11" ]; then
-  PKG_DEPENDS_TARGET+=" setxkbmap"
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET setxkbmap"
 else
-  PKG_DEPENDS_TARGET+=" bkeymaps"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bkeymaps"
 fi
 
 post_makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/lib/libreelec
-    cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/lib/libreelec
-    sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
-      -i ${INSTALL}/usr/lib/libreelec/backup-restore
-    sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
-      -i ${INSTALL}/usr/lib/libreelec/factory-reset
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/* $INSTALL/usr/lib/libreelec
 
-  ADDON_INSTALL_DIR=${INSTALL}/usr/share/kodi/addons/service.libreelec.settings
-  python_compile ${ADDON_INSTALL_DIR}/resources/lib/
+  ADDON_INSTALL_DIR=$INSTALL/usr/share/kodi/addons/service.libreelec.settings
+
+  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py $ADDON_INSTALL_DIR/resources/lib/ -f
+  rm -rf $(find $ADDON_INSTALL_DIR/resources/lib/ -name "*.py")
+
+  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py $ADDON_INSTALL_DIR/oe.py -f
+  rm -rf $ADDON_INSTALL_DIR/oe.py
 }
 
 post_install() {

@@ -2,15 +2,17 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2020-present Team LibreELEC (https://libreelec.tv)
 
 . /usr/lib/libreelec/functions
 
+# Get NAME, which is DISTRONAME, ie. LibreELEC
+. /etc/os-release
+
 hidecursor
 
-label=""
-target=""
-uuid=""
+label=
+target=
+uuid=
 
 get_target() {
   for arg in $(cat /proc/cmdline); do
@@ -20,11 +22,11 @@ get_target() {
         case $disk in
           LABEL=*)
             label="${disk#*=}"
-            target="$(blkid -L ${label})"
+            target="$(blkid -L $label)"
             ;;
           UUID=*)
             uuid="${disk#*=}"
-            target="$(blkid -U ${uuid})"
+            target="$(blkid -U $uuid)"
             ;;
           /*)
             target="$disk"
@@ -36,45 +38,43 @@ get_target() {
 }
 
 show_reset_msg() {
-  echo -e "RESET IN PROGRESS\n"
-  echo -e "Please do not reboot or turn off your @DISTRONAME@ device!\n"
+  echo "RESET IN PROGRESS"
+  echo ""
+  echo "Please do not reboot or turn off your ${NAME} device!"
+  echo ""
 }
 
-if [ -f /storage/.cache/reset_hard ]; then
+if [ -f /storage/.cache/reset_oe ] ; then
   # hard reset
-  rm -f /storage/.cache/reset_hard
+  rm -f /storage/.cache/reset_oe
   get_target
-  if [ -n "${target}" ]; then
+  if [ ! -z $target ] ; then
     show_reset_msg
 
     StartProgress spinner "Performing hard reset... "
-    if [ -b "${target}" -a $(blkid -o value -s TYPE "${target}") = "ext4" ]; then
-      umount /storage/
-      mke2fs -t ext4 -m 0 "${target}" &>/dev/null
-      if [ -n "${label}" ]; then
-        tune2fs -U random -L "${label}" "${target}" &>/dev/null
+      umount /storage
+      mke2fs -t ext4 -m 0 $target &>/dev/null
+      if [ ! -z $label ] ; then
+        tune2fs -U random -L $label $target &>/dev/null
       fi
-      if [ -n "${uuid}" ]; then
-        tune2fs -U "${uuid}" "${target}" &>/dev/null
+      if [ ! -z $uuid ] ; then
+        tune2fs -U $uuid $target &>/dev/null
       fi
-    else
-      find /storage/ -mindepth 1 -delete
-    fi
-    StopProgress "done!"
+      StopProgress "done!"
 
     echo
     StartProgress countdown "Rebooting in 5s... " 5 "NOW"
   fi
-elif [ -f /storage/.cache/reset_soft ]; then
+elif [ -f /storage/.cache/reset_xbmc ] ; then
   # soft reset
-  rm -f /storage/.cache/reset_soft
+  rm -f /storage/.cache/reset_xbmc
   get_target
-  if [ -n "${target}" ]; then
+  if [ ! -z $target ] ; then
     show_reset_msg
 
     StartProgress spinner "Performing soft reset... "
-      find /storage/.cache/ /storage/.config/ /storage/.kodi/ -mindepth 1 -delete
-    StopProgress "done!"
+      rm -rf /storage/.??* &>/dev/null
+      StopProgress "done!"
 
     echo
     StartProgress countdown "Rebooting in 5s... " 5 "NOW"

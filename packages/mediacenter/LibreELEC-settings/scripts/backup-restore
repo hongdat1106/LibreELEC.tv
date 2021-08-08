@@ -2,37 +2,39 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2020-present Team LibreELEC (https://libreelec.tv)
 
 . /usr/lib/libreelec/functions
 
+# Get NAME, which is DISTRONAME, ie. LibreELEC
+. /etc/os-release
+
 hidecursor
 
-BACKUP_EXTENSION_LIST=".tar .tar.gz .tar.bz2 .tar.xz"
-for EXTENSION in $BACKUP_EXTENSION_LIST; do
-  BACKUP_FILE=$(find /storage/.restore/ -name "*${EXTENSION}" -print -quit 2>/dev/null)
-  [ -n "${BACKUP_FILE}" ] && break
-done
+BACKUP_FILE=`ls -1 /storage/.restore/??????????????.tar 2>/dev/null | tail -1`
 
-
-if [ -f "${BACKUP_FILE}" ]; then
-  echo -e "RESTORE IN PROGRESS\n"
-  echo -e "Please do not reboot or turn off your @DISTRONAME@ device!\n"
+if [ -f "$BACKUP_FILE" ] ; then
+  echo "RESTORE IN PROGRESS"
+  echo ""
+  echo "Please do not reboot or turn off your ${NAME} device!"
+  echo ""
 
   StartProgress spinner "Checking backup file... "
-    tar tf "${BACKUP_FILE}" &>/dev/null
+    tar tf $BACKUP_FILE &>/dev/null
+    ret=$?
 
-  if [ $? -eq 0 ]; then
+  if [ $ret -eq 0 ] ; then
     StopProgress "OK"
 
-    echo -e "\nThis may take some time to complete, please be patient.\n"
+    echo
+    echo "This may take some time to complete, please be patient."
+    echo
 
     StartProgress spinner "Restoring... "
-      rm -rf /storage/.kodi \
-             /storage/.cache \
-             /storage/.config &>/dev/null
-      tar xf "${BACKUP_FILE}" -C / &>/dev/null
-      rm -f "${BACKUP_FILE}" &>/dev/null
+      rm -rf /storage/.kodi &>/dev/null
+      rm -rf /storage/.cache &>/dev/null
+      rm -rf /storage/.config &>/dev/null
+      tar xf $BACKUP_FILE -C / &>/dev/null
+      rm -f $BACKUP_FILE &>/dev/null
       sync
       StopProgress "done!"
 
@@ -41,10 +43,12 @@ if [ -f "${BACKUP_FILE}" ]; then
   else
     StopProgress "FAILED"
 
-    echo -e "\nBackup file is not valid, or corrupt.\n"
+    echo
+    echo "Backup file is not valid, or corrupt."
 
+    echo
     StartProgress spinner "Removing file to allow normal restart... "
-      rm -f "${BACKUP_FILE}" &>/dev/null
+      rm -f $BACKUP_FILE &>/dev/null
       sync
       StopProgress "done"
 
@@ -53,4 +57,5 @@ if [ -f "${BACKUP_FILE}" ]; then
   fi
 fi
 
+sync
 reboot -f
