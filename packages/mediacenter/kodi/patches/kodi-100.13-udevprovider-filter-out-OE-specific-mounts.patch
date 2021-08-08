@@ -7,9 +7,11 @@ Subject: [PATCH] udevprovider: filter out OE specific mounts
  xbmc/platform/linux/storage/UDevProvider.cpp | 14 ++++++++++++++
  1 file changed, 14 insertions(+)
 
+diff --git a/xbmc/platform/linux/storage/UDevProvider.cpp b/xbmc/platform/linux/storage/UDevProvider.cpp
+index daf0d58..31e574f 100644
 --- a/xbmc/platform/linux/storage/UDevProvider.cpp
 +++ b/xbmc/platform/linux/storage/UDevProvider.cpp
-@@ -139,6 +139,20 @@ void CUDevProvider::GetDisks(VECSOURCES&
+@@ -150,6 +150,20 @@ void CUDevProvider::GetDisks(VECSOURCES& disks, bool removable)
        continue;
      }
  
@@ -30,3 +32,6 @@ Subject: [PATCH] udevprovider: filter out OE specific mounts
      // look for devices on the usb bus, or mounted on */media/ (sdcards), or optical devices
      const char *bus = udev_device_get_property_value(device, "ID_BUS");
      const char *optical = udev_device_get_property_value(device, "ID_CDROM"); // matches also DVD, Blu-ray
+-- 
+2.14.1
+
