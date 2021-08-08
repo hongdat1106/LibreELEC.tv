@@ -1,6 +1,7 @@
 import os
 import socket
 import xbmc
+import xbmcvfs
 import xbmcaddon
 import xbmcgui
 
@@ -18,7 +19,7 @@ DEFAULTS = dict(
 )
 
 ADDON = xbmcaddon.Addon()
-ADDON_HOME = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+ADDON_HOME = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
 ADDON_ICON = ADDON.getAddonInfo('icon')
 ADDON_NAME = ADDON.getAddonInfo('name')
 ADDON_PATH = ADDON.getAddonInfo('path')
@@ -40,7 +41,7 @@ def get_settings():
 
 
 def log(message):
-    xbmc.log('{}: {}'.format(ADDON_NAME, message), xbmc.LOGNOTICE)
+    xbmc.log('{}: {}'.format(ADDON_NAME, message), xbmc.LOGINFO)
 
 
 def notification(message):
